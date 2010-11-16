@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+		var tabLinks = {}
+		chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
+			if (request.type == 'save') {
+				tabLinks['t'+sender.tab.id] = request.data;
+				chrome.pageAction.show(sender.tab.id);
+				sendResponse({});
+			} else if (request.type == 'get') {
+				sendResponse(tabLinks['t'+request.tabId]);
+			} else {
+				sendResponse({});
+			}
+		});
+    </script>
+  </head>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<script src="jquery.js"></script>
+    <script>
+		var relStrings = {
+			'previous': 'Previous page',
+			'next': 'Next page',
+			'first': 'First page',
+			'last': 'Last page',
+			'up': 'Parent page',
+			'search': 'Search link',
+			'author': 'Page author',
+			'help': 'Help link',
+			'prev': 'Previous page',
+			'top': 'Root page',
+			'index': 'Site index',
+			'begin': 'First page',
+			'start': 'First page',
+			'end': 'Last page',
+			'bookmark': 'Bookmarkable link',
+			'canonical': 'Bookmarkable link',
+			'shortlink': 'Shortened link',
+			'license': 'Page license'
+		};
+		$(function () {
+			chrome.tabs.getSelected(undefined, function (tab) {
+				chrome.extension.sendRequest({type: 'get', tabId: tab.id}, function(response) {
+					response.forEach(function (link) {
+						var relTitle = relStrings[link.rel];
+						$('#links').append('<a class="rel'+link.rel+'" title="'+relTitle+'" href="'+link.href+'">'+((link.title) ? link.title : relTitle)+'</a>');
+					});
+				});
+			});
+			$('a').live('click', function (e) {
+				chrome.tabs.getSelected(undefined, function (tab) {
+					chrome.tabs.executeScript(tab.id, {
+						code: 'window.location.href = "'+$(e.target).attr('href').replace(/'/g, '\\\'')+'"'
+					});
+					window.close();
+				});
+			});
+		});
+    </script>
+	<style>
+		body{ 
+			overflow-x: hidden;
+		}
+		a {
+			padding-left: 20px;
+			display: block;
+		}
+		.relbookmark, .relcanonical {
+			background: url(images/star.png) no-repeat 0% 50%;
+		}
+		.relshortlink {
+			background: url(images/bullet_star.png) no-repeat 0% 50%;
+		}
+		.relnext {
+			background: url(images/arrow_right.png) no-repeat 0% 50%;
+		}
+		.relup {
+			background: url(images/arrow_up.png) no-repeat 0% 50%;
+		}
+		.reltop {
+			background: url(images/arrow_top.png) no-repeat 0% 50%;
+		}
+		.rellicense {
+			background: url(images/key.png) no-repeat 0% 50%;
+		}
+		.relfirst, .relbegin, .relstart {
+			background: url(images/arrow_first.png) no-repeat 0% 50%;
+		}
+		.rellast, .relend {
+			background: url(images/arrow_last.png) no-repeat 0% 50%;
+		}
+		.relindex {
+			background: url(images/text_list_numbers.png) no-repeat 0% 50%;
+		}
+		.relprev, .relprevious {
+			background: url(images/arrow_left.png) no-repeat 0% 50%;
+		}
+		.relsearch {
+			background: url(images/magnifier.png) no-repeat 0% 50%;
+		}
+		.relauthor {
+			background: url(images/user.png) no-repeat 0% 50%;
+		}
+		.relhelp {
+			background: url(images/help.png) no-repeat 0% 50%;
+		}
+	</style>
+  </head>
+  <body style="width: 400px">
+	<div id="links">
+	</div>
+  </body>
+</html>

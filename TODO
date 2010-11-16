@@ -1,0 +1,27 @@
+Add the following rel support:
+tag (as a list)
+archives
+answer, reply, comment
+chapter, section, subsection, appendix
+contributor
+details
+edit
+gallery, list (same as index)
+glossary
+latest-version
+logout (LINK)
+map
+pgpkey
+presentation, slides, slideshow (LINK)
+print (LINK)
+question, topic, subject, problem
+related
+reply, posting, comment
+reviewer
+subresource
+technicalauthor
+thread
+topic, subject
+translatedfrom
+translator
+webmaster

@@ -1,0 +1,25 @@
+{
+  "name": "Advanced Navigation",
+  "description": "Access advanced page navigation available on certain websites.",
+  "version": "1.0",
+  "icons": {
+	"16": "images/icon.png",
+	"48": "images/icon48.png",
+	"128": "images/icon128.png"
+  },
+  "permissions": [
+    "tabs", "http://*/*", "https://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["jquery.js", "content.js"]
+    }
+  ],
+  "background_page": "background.htm",
+  "page_action": {
+    "default_icon": "images/icon.png",
+    "default_title": "Advanced Navigation",
+	"default_popup": "popup.htm"
+  }
+}
